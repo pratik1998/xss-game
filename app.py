@@ -6,6 +6,7 @@ from level2.main import get_home_page as level2_home_page, get_frame_page as lev
 from level3.main import get_home_page as level3_home_page, get_frame_page as level3_frame_page, get_source_page as level3_source_page
 from level4.main import get_home_page as level4_home_page, get_frame_page as level4_frame_page, get_source_page as level4_source_page, get_frame_timer_page as level4_frame_timer_page
 from level5.main import get_home_page as level5_home_page, get_frame_page as level5_frame_page, get_source_page as level5_source_page, get_signup_page as level5_signup_page, get_confirmation_page as level5_confirmation_page
+from level6.main import get_home_page as level6_home_page, get_frame_page as level6_frame_page, get_source_page as level6_source_page
 from home import get_home_page
 from datetime import datetime, timedelta
 
@@ -111,10 +112,6 @@ def level3():
     # return render_template('error/error.html')
     return level3_home_page()
 
-@app.route("/level3/<path:path>", methods=['GET'])
-def level3_payload_response(path):
-    return level3_home_page()
-
 @app.route("/level3/frame", methods=['GET'])
 def level3_frame():
     return level3_frame_page()
@@ -134,6 +131,10 @@ def level3_record_feedback():
     resp.set_cookie('level3', cookie_value, httponly=True, expires=datetime.now() + timedelta(days=30))
     store_cookie('level3', cookie_value)
     return resp
+
+@app.route("/level3/<path:path>", methods=['GET'])
+def level3_payload_response(path):
+    return level3_home_page()
 
 # Level 4 routes
 
@@ -209,3 +210,38 @@ def level5_path(path):
         return level5_confirmation_page(next)
     else:
         return level5_frame_page()
+
+# Level 6 routes
+
+@app.route("/level6", methods=['GET'])
+def level6():
+    return level6_home_page()
+
+@app.route("/level6/frame", methods=['GET'])
+def level6_frame():
+    return level6_frame_page()
+
+@app.route("/level6/source", methods=['GET'])
+def level6_source():
+    return level6_source_page()
+
+@app.route("/feedback/level6/<path:path>", methods=['GET'])
+def level6_feedback(path):
+    return 'OK'
+
+@app.route("/level6/record", methods=['GET'])
+def level6_record_feedback():
+    resp = make_response('OK')
+    cookie_value = generate_cookie()
+    resp.set_cookie('level6', cookie_value, httponly=True, expires=datetime.now() + timedelta(days=30))
+    store_cookie('level6', cookie_value)
+    return resp
+
+@app.route("/level6/<path:path>", methods=['GET'])
+def level6_payload_response(path):
+    return level6_home_page()
+
+# Done routes
+@app.route("/done", methods=['GET'])
+def done():
+    return render_template('done.html')
