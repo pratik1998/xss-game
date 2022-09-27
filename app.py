@@ -5,6 +5,7 @@ from level1.main import get_home_page as level1_home_page, get_frame_page as lev
 from level2.main import get_home_page as level2_home_page, get_frame_page as level2_frame_page, get_source_page as level2_source_page
 from level3.main import get_home_page as level3_home_page, get_frame_page as level3_frame_page, get_source_page as level3_source_page
 from level4.main import get_home_page as level4_home_page, get_frame_page as level4_frame_page, get_source_page as level4_source_page, get_frame_timer_page as level4_frame_timer_page
+from level5.main import get_home_page as level5_home_page, get_frame_page as level5_frame_page, get_source_page as level5_source_page, get_signup_page as level5_signup_page, get_confirmation_page as level5_confirmation_page
 from home import get_home_page
 from datetime import datetime, timedelta
 
@@ -172,3 +173,39 @@ def level4_record_feedback():
     resp.set_cookie('level4', cookie_value, httponly=True, expires=datetime.now() + timedelta(days=30))
     store_cookie('level4', cookie_value)
     return resp
+
+# Level 5 routes
+@app.route("/level5", methods=['GET'])
+def level5():
+    return level5_home_page()
+
+@app.route("/level5/frame", methods=['GET'])
+def level5_frame():
+    return level5_frame_page()
+
+@app.route("/level5/source", methods=['GET'])
+def level5_source():
+    return level5_source_page()
+
+@app.route("/feedback/level5/<path:path>", methods=['GET'])
+def level5_feedback(path):
+    return 'OK'
+
+@app.route("/level5/record", methods=['GET'])
+def level5_record_feedback():
+    resp = make_response('OK')
+    cookie_value = generate_cookie()
+    resp.set_cookie('level5', cookie_value, httponly=True, expires=datetime.now() + timedelta(days=30))
+    store_cookie('level5', cookie_value)
+    return resp
+
+@app.route("/level5/<path:path>", methods=['GET'])
+def level5_path(path):
+    if "signup" in path:
+        next = request.args.get('next')
+        return level5_signup_page(next)
+    elif "confirm" in path:
+        next = request.args.get('next', 'welcome')
+        return level5_confirmation_page(next)
+    else:
+        return level5_frame_page()
