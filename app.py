@@ -29,6 +29,10 @@ def favicon():
 def level1():
     return level1_home_page()
 
+@app.route("/feedback/level1/<path:path>", methods=['GET'])
+def level1_feedback(path):
+    return 'OK'
+
 @app.route("/level1/frame", methods=['GET'])
 def level1_frame():
     query = request.args.get('query')
