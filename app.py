@@ -4,6 +4,7 @@ from flask import Flask, request, make_response, render_template
 from level1.main import get_home_page as level1_home_page, get_frame_page as level1_frame_page, get_frame_query_page as level1_frame_query_page, get_source_page as level1_source_page
 from level2.main import get_home_page as level2_home_page, get_frame_page as level2_frame_page, get_source_page as level2_source_page
 from level3.main import get_home_page as level3_home_page, get_frame_page as level3_frame_page, get_source_page as level3_source_page
+from level4.main import get_home_page as level4_home_page, get_frame_page as level4_frame_page, get_source_page as level4_source_page, get_frame_timer_page as level4_frame_timer_page
 from home import get_home_page
 from datetime import datetime, timedelta
 
@@ -134,3 +135,40 @@ def level3_record_feedback():
     return resp
 
 # Level 4 routes
+
+@app.route("/level4", methods=['GET'])
+def level4():
+    # Skipping cookie validation so we can move between levels
+    # level1_cookie = request.cookies.get('level2')
+    # if level1_cookie and validate_cookie('level1', level1_cookie):
+    #     return level2_home_page()
+    # return render_template('error/error.html')
+    return level4_home_page()
+
+@app.route("/level4/<path:path>", methods=['GET'])
+def level4_payload_response(path):
+    return level4_home_page()
+
+@app.route("/level4/frame", methods=['GET'])
+def level4_frame():
+    timer = request.args.get('timer')
+    if not timer:
+        return level4_frame_page()
+    else:
+        return level4_frame_timer_page(timer)
+
+@app.route("/level4/source", methods=['GET'])
+def level4_source():
+    return level4_source_page()
+
+@app.route("/feedback/level4/<path:path>", methods=['GET'])
+def level4_feedback(path):
+    return 'OK'
+
+@app.route("/level4/record", methods=['GET'])
+def level4_record_feedback():
+    resp = make_response('OK')
+    cookie_value = generate_cookie()
+    resp.set_cookie('level4', cookie_value, httponly=True, expires=datetime.now() + timedelta(days=30))
+    store_cookie('level4', cookie_value)
+    return resp
