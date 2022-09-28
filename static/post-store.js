@@ -2,8 +2,12 @@
  * Objects to implement a client-side post database.
  */
 
+function escapeUnsafeChars(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
 function Post(message) { 
-  this.message = message;
+  this.message = escapeUnsafeChars(message);
   this.date = (new Date()).getTime();
 }
 
