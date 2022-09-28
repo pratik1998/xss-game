@@ -10,4 +10,8 @@ def get_source_page():
     return render_template('level4/source.html')
 
 def get_frame_timer_page(timer):
-    return render_template('level4/timer.html', timer=timer)
+    try: 
+        timer = int(timer)
+    except ValueError:
+        timer = 3
+    return render_template('level4/timer.html', timer=str(timer))

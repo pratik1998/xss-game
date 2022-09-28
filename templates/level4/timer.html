@@ -18,8 +18,8 @@
   <body id="level4">
     <img src="/static/logos/level4.png" />
     <br>
-    <img src="/static/loading.gif" onload="startTimer('');" />
+    <img src="/static/loading.gif" onload="startTimer('{{ timer }}');" />
     <br>
-    <div id="message">Your timer will execute in  seconds.</div>
+    <div id="message">Your timer will execute in {{ timer }} seconds.</div>
   </body>
 </html>
