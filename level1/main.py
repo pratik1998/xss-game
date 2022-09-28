@@ -1,5 +1,5 @@
 import os
-from flask import render_template
+from flask import render_template, make_response, escape
 
 page_header = """
 <!doctype html>
@@ -33,12 +33,17 @@ def get_home_page():
     return render_template('level1/home.html')
 
 def get_frame_page():
-    return page_header + main_page_markup + page_footer
+    resp = make_response(page_header + main_page_markup + page_footer)
+    resp.headers['X-XSS-Protection'] = '1; mode=block'
+    return resp
 
 def get_frame_query_page(query):
-    message = "Sorry, no results were found for <b>" + query + "</b>."
+    escaped_query = escape(query)
+    message = f"Sorry, no results were found for <b> {escaped_query} </b>."
     message += " <a href='?'>Try again</a>."
-    return page_header + message + page_footer
+    resp = make_response(page_header + message + page_footer)
+    resp.headers['X-XSS-Protection'] = '1; mode=block'
+    return resp
 
 def get_source_page():
     return render_template('level1/source.html')

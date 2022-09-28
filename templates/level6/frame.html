@@ -18,7 +18,7 @@
       var scriptEl = document.createElement('script');
  
       // This will totally prevent us from loading evil URLs!
-      if (url.match(/^https?:\/\//)) {
+      if (url.toLowerCase().match(/^https?:\/\//) || url.toLowerCase().includes('//') || url.toLowerCase().includes('data:text/')) {
         setInnerText(document.getElementById("log"),
           "Sorry, cannot load a URL containing \"http\".");
         return;

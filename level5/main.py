@@ -10,6 +10,9 @@ def get_source_page():
     return render_template('level5/source.html')
 
 def get_signup_page(signup):
+    ALLOWED_NEXT_URLS = ['confirm']
+    if signup not in ALLOWED_NEXT_URLS:
+        signup = 'confirm'
     return render_template('level5/signup.html', next=signup)
 
 def get_confirmation_page(next):

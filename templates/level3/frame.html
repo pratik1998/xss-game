@@ -13,8 +13,8 @@
     <script>
       function chooseTab(num) {
         // Dynamically load the appropriate image.
-        var html = "Image " + parseInt(num) + "<br>";
-        html += "<img src='/static/level3/cloud" + num + ".jpg' />";
+        var html = "Image " + parseInt(escape(num)) + "<br>";
+        html += "<img src='/static/level3/cloud" + parseInt(escape(num)) + ".jpg' />";
         $('#tabContent').html(html);
 
         window.location.hash = num;
