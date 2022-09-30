@@ -4,22 +4,13 @@
     <!-- Internal game scripts/styles, mostly boring stuff -->
     <script src="/static/game-frame.js"></script>
     <link rel="stylesheet" href="/static/game-frame-styles.css" />
- 
-    <script>
-      function startTimer(seconds) {
-        seconds = parseInt(seconds) || 3;
-        setTimeout(function() { 
-          window.confirm("Time is up!");
-          window.history.back();
-        }, seconds * 1000);
-      }
-    </script>
   </head>
   <body id="level4">
     <img src="/static/logos/level4.png" />
     <br>
-    <img src="/static/loading.gif" onload="startTimer('{{ timer }}');" />
+    <img src="/static/loading.gif" id="loading-gif" data-timer='{{ timer|tojson }}' />
     <br>
     <div id="message">Your timer will execute in {{ timer }} seconds.</div>
+    <script type="text/javascript" src="/static/level4/timer.js"></script>
   </body>
 </html>
