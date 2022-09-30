@@ -23,10 +23,10 @@ page_footer = """
  
 main_page_markup = """
 <form action="" method="GET">
-  <input id="query" name="query" value="Enter query here..."
-    onfocus="this.value=''">
+  <input id="query" name="query" value="Enter query here...">
   <input id="button" type="submit" value="Search">
 </form>
+<script type="text/javascript" src="/static/level1/frame.js"></script>
 """
 
 def get_home_page():
@@ -34,15 +34,24 @@ def get_home_page():
 
 def get_frame_page():
     resp = make_response(page_header + main_page_markup + page_footer)
-    resp.headers['X-XSS-Protection'] = '1; mode=block'
+    resp.headers['Content-Security-Policy'] = (
+      "default-src 'self';" +
+      "script-src 'self';" +
+      "style-src 'self' http://fonts.googleapis.com;"
+    )
     return resp
 
 def get_frame_query_page(query):
-    escaped_query = escape(query)
+    # escaped_query = escape(query)
+    escaped_query = query
     message = f"Sorry, no results were found for <b> {escaped_query} </b>."
     message += " <a href='?'>Try again</a>."
     resp = make_response(page_header + message + page_footer)
-    resp.headers['X-XSS-Protection'] = '1; mode=block'
+    resp.headers['Content-Security-Policy'] = (
+      "default-src 'self';" +
+      "script-src 'self';" +
+      "style-src 'self' http://fonts.googleapis.com;"
+    )
     return resp
 
 def get_source_page():

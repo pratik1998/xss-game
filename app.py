@@ -245,3 +245,17 @@ def level6_payload_response(path):
 @app.route("/done", methods=['GET'])
 def done():
     return render_template('done.html')
+
+@app.after_request
+def add_header(response):
+    # Adding security headers
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    if 'Content-Security-Policy' in response.headers:
+        response.headers['Content-Security-Policy'] += (
+            "img-src 'self' http://ssl.gstatic.com data:;" +
+            "font-src 'self' fonts.gstatic.com fonts.googleapis.com;" +
+            "connect-src 'self';"
+        )
+    return response
