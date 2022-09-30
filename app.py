@@ -252,10 +252,11 @@ def add_header(response):
     response.headers['X-Frame-Options'] = 'SAMEORIGIN'
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['X-Content-Type-Options'] = 'nosniff'
+    default_csp_policy = (
+        "img-src 'self' http://ssl.gstatic.com data:;" +
+        "font-src 'self' fonts.gstatic.com fonts.googleapis.com;" +
+        "connect-src 'self';"
+    )
     if 'Content-Security-Policy' in response.headers:
-        response.headers['Content-Security-Policy'] += (
-            "img-src 'self' http://ssl.gstatic.com data:;" +
-            "font-src 'self' fonts.gstatic.com fonts.googleapis.com;" +
-            "connect-src 'self';"
-        )
+        response.headers['Content-Security-Policy'] += default_csp_policy
     return response
