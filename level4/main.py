@@ -1,15 +1,13 @@
 from flask import render_template, make_response
+from utils import generate_nonce, generate_nonces, generate_nonce_str_from_list
 
 def get_home_page():
     return render_template('level4/home.html')
 
 def get_frame_page():
-    resp = make_response(render_template('level4/frame.html'))
-    resp.headers['Content-Security-Policy'] = (
-      "default-src 'self';" +
-      "script-src 'self';" +
-      "style-src 'self';"
-    )
+    nonce = generate_nonce()
+    resp = make_response(render_template('level4/frame.html', nonce=nonce))
+    resp.headers['Content-Security-Policy'] = f'script-src {generate_nonce_str_from_list([nonce])};'
     return resp
 
 def get_source_page():
@@ -20,11 +18,11 @@ def get_frame_timer_page(timer):
         timer = int(timer)
     except ValueError:
         timer = 3
-    resp = make_response(render_template('level4/timer.html', timer=str(timer)))
-    # resp = make_response(render_template('level4/timer.html', timer=timer))
-    resp.headers['Content-Security-Policy'] = (
-      "default-src 'self';" +
-      "script-src 'self';" +
-      "style-src 'self';"
-    )
+    nonces = generate_nonces(2)
+    data = {
+        'gameFrameNonce': nonces[0],
+        'timerNonce': nonces[1]
+    }
+    resp = make_response(render_template('level4/timer.html', timer=str(timer), nonce_data=data))
+    resp.headers['Content-Security-Policy'] = f'script-src {generate_nonce_str_from_list(nonces)};'
     return resp
