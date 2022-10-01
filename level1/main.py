@@ -42,8 +42,7 @@ def get_frame_page():
     return resp
 
 def get_frame_query_page(query):
-    # escaped_query = escape(query)
-    escaped_query = query
+    escaped_query = escape(query)
     message = f"Sorry, no results were found for <b> {escaped_query} </b>."
     message += " <a href='?'>Try again</a>."
     resp = make_response(page_header + message + page_footer)

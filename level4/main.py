@@ -21,7 +21,6 @@ def get_frame_timer_page(timer):
     except ValueError:
         timer = 3
     resp = make_response(render_template('level4/timer.html', timer=str(timer)))
-    # resp = make_response(render_template('level4/timer.html', timer=timer))
     resp.headers['Content-Security-Policy'] = (
       "default-src 'self';" +
       "script-src 'self';" +

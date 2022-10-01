@@ -16,9 +16,9 @@ def get_source_page():
     return render_template('level5/source.html')
 
 def get_signup_page(signup):
-    # ALLOWED_NEXT_URLS = ['confirm']
-    # if signup not in ALLOWED_NEXT_URLS:
-    #     signup = 'confirm'
+    ALLOWED_NEXT_URLS = ['confirm']
+    if signup not in ALLOWED_NEXT_URLS:
+        signup = 'confirm'
     resp = make_response(render_template('level5/signup.html', next=signup))
     resp.headers['Content-Security-Policy'] = (
       "default-src 'self';" +
