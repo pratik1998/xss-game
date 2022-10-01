@@ -14,9 +14,9 @@ def get_source_page():
     return render_template('level5/source.html')
 
 def get_signup_page(signup):
-    # ALLOWED_NEXT_URLS = ['confirm']
-    # if signup not in ALLOWED_NEXT_URLS:
-    #     signup = 'confirm'
+    ALLOWED_NEXT_URLS = ['confirm']
+    if signup not in ALLOWED_NEXT_URLS:
+        signup = 'confirm'
     nonce = generate_nonce()
     resp = make_response(render_template('level5/signup.html', next=signup, nonce=nonce))
     resp.headers['Content-Security-Policy'] = f'script-src {generate_nonce_str_from_list([nonce])};'
