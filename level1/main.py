@@ -40,8 +40,7 @@ def get_frame_page():
     return resp
 
 def get_frame_query_page(query):
-    # escaped_query = escape(query)
-    escaped_query = query
+    escaped_query = escape(query)
     nonce = generate_nonce()
     message = f"Sorry, no results were found for <b> {escaped_query} </b>."
     message += " <a href='?'>Try again</a>."

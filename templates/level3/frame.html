@@ -2,11 +2,12 @@
 <html>
   <head>
     <!-- Internal game scripts/styles, mostly boring stuff -->
-    <script src="/static/game-frame.js"></script>
+    <script nonce="{{nonce_data.gameFrameNonce}}" src="/static/game-frame.js"></script>
     <link rel="stylesheet" href="/static/game-frame-styles.css" />
 
     <!-- Load jQuery -->
     <script 
+      nonce="{{nonce_data.googleAJAXNonce}}"
       src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
     </script>
 
@@ -22,6 +23,6 @@
     <div class="tab" id="tab3">Image 3</div>
 
     <div id="tabContent">&nbsp;</div>
-    <script type="text/javascript" src="/static/level3/frame.js"></script>
+    <script nonce="{{nonce_data.frameNonce}}" type="text/javascript" src="/static/level3/frame.js"></script>
   </body>
 </html>
