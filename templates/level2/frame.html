@@ -2,11 +2,11 @@
 <html>
   <head>
     <!-- Internal game scripts/styles, mostly boring stuff -->
-    <script src="/static/game-frame.js"></script>
+    <script nonce='{{nonce_data.gameFrameNonce}}' src="/static/game-frame.js"></script>
     <link rel="stylesheet" href="/static/game-frame-styles.css" />
 
     <!-- This is our database of messages -->
-    <script src="/static/post-store.js"></script>
+    <script nonce='{{nonce_data.postStoreNonce}}' src="/static/post-store.js"></script>
 
   </head>
 
@@ -39,5 +39,5 @@
     </table>
 
   </body>
-  <script type="text/javascript" src="/static/level2/frame.js"></script>
+  <script nonce='{{nonce_data.frameNonce}}' type="text/javascript" src="/static/level2/frame.js"></script>
 </html>
